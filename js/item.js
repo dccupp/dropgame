@@ -30,7 +30,7 @@ function Item(cl, xpos, ypos){
 	 */ 
 	 this.destroy = function(){
          //remove all splashes from the screen
-         var splashes = doucment.getElementsByClassName("splash");
+         var splashes = document.getElementsByClassName("splash");
          //assign as animating GIF where the drop is
          var newsplash = document.createElement("img");
          newsplash.src = "img/splash.gif?"+Math.random();
