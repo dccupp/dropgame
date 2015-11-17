@@ -7,10 +7,13 @@
  * @param xpos  int - horizontal starting position
  * @param ypos  int - vertical starting position
  */
-function Item(cl, xpos, ypos){
+function Item(cl, xpos, ypos, w, h){
 	//properties to let each item store its own x/y position
 	this.x = xpos;
 	this.y = ypos;
+	//properties to let each item store its width and height
+	this.width=w;
+	this.height=h;
 	//property that keeps track of the item's visual
 	this.item_on_page;
 	/**
@@ -29,6 +32,24 @@ function Item(cl, xpos, ypos){
 	 * The destroy method removes the item from the game
 	 */ 
 	 this.destroy = function(){
+         //begin "if it's a raindrop, add a splash & remove from the array"
+         if (this.item_on_page.className=="raindrop"){ 
+             //remove all splashes from the screen
+             var splashes = document.getElementsByClassName("splash");
+             //assign as animating GIF where the drop is
+             var newsplash = document.createElement("img");
+             newsplash.src = "img/splash.gif?"+Math.random();
+             newsplash.style.position = "absolute";
+             newsplash.style.left = this.x+"px";
+             newsplash.style.top = this.y+"px";
+             document.body.appendChild(newsplash);
+             //figure out this drop's index num
+             var index_num = drop_array.indexOf(this);
+             //to remove the item from the array: you use splice(index,howMany);
+             drop_array.splice(index_num,1);
+             //remove div as a child of the body
+         }//end "if it's a raindrop, add a splash & remove from the array"
+
          //remove all splashes from the screen
          var splashes = document.getElementsByClassName("splash");
          //assign as animating GIF where the drop is
@@ -43,6 +64,7 @@ function Item(cl, xpos, ypos){
          //to remove the item from the array: you use splice(index,howMany);
          drop_array.splice(index_num,1);
          //remove div as a child of the body
+
          document.body.removeChild(this.item_on_page);
 	 }//end function destroy()
 
